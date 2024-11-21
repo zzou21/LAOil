@@ -3,8 +3,10 @@
 import json, pandas as pd
 
 def processExportedCSV(csvPath, savePath):
+    # This function is mostly used to clean the starting and ending [" and "]"ek
     dataFrame = pd.read_csv(csvPath)
     columnsToIterateCleanListFormat = ["Newspaper Title", "City", "State"] #This is to get rid of the ["title"] bracket and quotation marks that came with the LOC API for these three columns.
+    columnsToDrop = ["Contributor", "Batch", "PDF Link", "LCCN"]
     for column in columnsToIterateCleanListFormat:
         dataFrame[column] = dataFrame[column].apply(lambda x: x[2:-2])
         dataFrame[column] = dataFrame[column].apply(lambda x: x[:-1] if x.endswith(".") else x)
@@ -13,9 +15,12 @@ def processExportedCSV(csvPath, savePath):
     for name in dataFrame["City"]:
         print(name)
     dataFrame = dataFrame.drop(columns=["State"])
+    for toDrop in columnsToDrop:
+        dataFrame = dataFrame.drop(columns=[toDrop])
+
     dataFrame.to_csv(savePath, index = False, encoding = "utf-8")
 
 if __name__ == "__main__":
     csvPath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/LOCLAOilInitialExtractWithoutBlankCities.csv"
-    savePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSV.csv"
+    savePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSVForModeling.csv"
     processExportedCSV(csvPath, savePath)
