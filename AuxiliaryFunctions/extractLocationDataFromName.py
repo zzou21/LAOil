@@ -25,13 +25,22 @@ class findLocationData:
         newspaperDataRaw = newspaperDataRaw.drop("Unnamed: 0", axis = 1)
         print(f"Column titles: {newspaperDataRaw.columns}")
         print(newspaperDataRaw.head())
+        newspaperDataRaw = newspaperDataRaw[newspaperDataRaw["City"].str.count(",") == 1]
+        newspaperDataRaw[["City", "State"]] = newspaperDataRaw["City"].str.split(", ", expand = True)
+        print(newspaperDataRaw.head())
+        return newspaperDataRaw
+    
+    def compareCSVData(self):
+        newspaperData = self.readNewspaperCSV()
+        GNISData = self.readGNISCSV()
+        GNISData["key"] = GNISData["feature_name"].str.extract(f"({'|'.join(newspaperData['city'])})", expand=False)
+        newspaperData = pd.merge(newspaperData, GNISData[["key", "longitude", "latitude"]], left_on="city", right_on="key", how="left")
+        newspaperData.drop(columns=["key"], inplace=True)
         
-
-
-
 if __name__ == "__main__":
     newspaperCSV = "updatedCSVNewspaper.csv"
-    GNISCSV = "C:/Users/zz341/Desktop/combinedAllStatesContent.csv"
+    # GNISCSV = "C:/Users/zz341/Desktop/combinedAllStatesContent.csv"
+    GNISCSV = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/GNISDomesticNamesAllStates/combinedAllStatesContent.csv"
     outputCSVLocation = ""
     locationDataFindMachine = findLocationData(newspaperCSV, GNISCSV, outputCSVLocation)
     # locationDataFindMachine.readGNISCSV()
