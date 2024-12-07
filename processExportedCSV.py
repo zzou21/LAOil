@@ -5,12 +5,13 @@ import json, pandas as pd
 def processExportedCSV(csvPath, savePath):
     # This function is mostly used to clean the starting and ending [" and "]"ek
     dataFrame = pd.read_csv(csvPath)
-    columnsToIterateCleanListFormat = ["Newspaper Title", "City", "State"] #This is to get rid of the ["title"] bracket and quotation marks that came with the LOC API for these three columns.
-    columnsToDrop = ["Contributor", "Batch", "PDF Link", "LCCN"]
+    columnsToIterateCleanListFormat = ["Newspaper Title", "City", "State", "PDF Link"] #This is to get rid of the ["title"] bracket and quotation marks that came with the LOC API for these three columns.
+    columnsToDrop = ["Contributor", "Batch", "LCCN"]
     for column in columnsToIterateCleanListFormat:
-        dataFrame[column] = dataFrame[column].apply(lambda x: x[2:-2])
-        dataFrame[column] = dataFrame[column].apply(lambda x: x[:-1] if x.endswith(".") else x)
-        dataFrame[column] = dataFrame[column].apply(lambda x: x.title())
+        if column != "PDF Link":
+            dataFrame[column] = dataFrame[column].apply(lambda x: x[2:-2])
+            dataFrame[column] = dataFrame[column].apply(lambda x: x[:-1] if x.endswith(".") else x)
+            dataFrame[column] = dataFrame[column].apply(lambda x: x.title())
     dataFrame["City"] = dataFrame["City"] + ", " + dataFrame["State"]
     for name in dataFrame["City"]:
         print(name)
@@ -22,5 +23,5 @@ def processExportedCSV(csvPath, savePath):
 
 if __name__ == "__main__":
     csvPath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/LOCLAOilInitialExtractWithoutBlankCities.csv"
-    savePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSVForModeling.csv"
+    savePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSVNewspaper.csv"
     processExportedCSV(csvPath, savePath)
