@@ -83,12 +83,12 @@ class findLocationData:
         print(f"Merged newspaper data: {mergedNewspaperDataCoordinates.head()}")
         print(f"Merged newspaper data: {mergedNewspaperDataCoordinates.columns}")
         print(f"merged newsppaer data length: {len(mergedNewspaperDataCoordinates.index)}")
-        # mergedNewspaperDataCoordinates.to_csv(self.outputCSVLocation, index = False, encoding = "utf-8")
+        mergedNewspaperDataCoordinates.to_csv(self.outputCSVLocation, index = False, encoding = "utf-8")
 
 if __name__ == "__main__":
     newspaperCSV = "updatedCSVNewspaper.csv"
-    # GNISCSV = "C:/Users/zz341/Desktop/combinedAllStatesContent.csv"
-    GNISCSV = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/GNISDomesticNamesAllStates/combinedAllStatesContent.csv"
+    GNISCSV = "C:/Users/zz341/Desktop/combinedAllStatesContent.csv"
+    # GNISCSV = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/GNISDomesticNamesAllStates/combinedAllStatesContent.csv"
     outputCSVLocation = "updatedCSVNewspaperCoordinates.csv"
     locationDataFindMachine = findLocationData(newspaperCSV, GNISCSV, outputCSVLocation)
     # locationDataFindMachine.readGNISCSV()
