@@ -1,2 +1,2 @@
 test = "wordest"
-print(test[-5:-2])
+print(test[-2:])

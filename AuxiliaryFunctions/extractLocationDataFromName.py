@@ -23,16 +23,39 @@ class findLocationData:
         newspaperDataRaw = newspaperDataRaw.drop("Unnamed: 0", axis = 1)
         # print(f"Column titles: {newspaperDataRaw.columns}")
         # print(newspaperDataRaw.head())
-        newspaperDataRaw = newspaperDataRaw[newspaperDataRaw["City"].str.count(",") == 1] # This is a crude data cleaning method that gets rid of newspapers that, in the Library of Congress, are labeled with more than one publication cities. This crude cleaning method is implemented because there is no time for me to develop a more robust method in Fall 2024.
-        newspaperDataRaw[["City", "State"]] = newspaperDataRaw["City"].str.split(", ", expand = True)
-        # print(newspaperDataRaw.head())
+
+        def cleanCityAndStates(column):
+            # temporaryCityList = column.split(",")
+            if "Chicago" in column:
+                editedColumn = "Chicago, Illinois"
+            elif "District Of Columbia" in column:
+                editedColumn = "Washington, District Of Columbia"
+            elif "O'Neill" in column and "Nebraska" in column:
+                editedColumn = "O'Neill, Nebraska"
+
+            elif "', '" in column:
+                column = column.replace("'", "")
+                temporaryColumnList = column.split(",")
+                temporaryColumnList = [city.strip() for city in temporaryColumnList]
+                
+                editedColumn = ", ".join(temporaryColumnList[-2:])
+            else:
+                editedColumn = column
+            return editedColumn
+        
+        newspaperDataRaw["City"] = newspaperDataRaw["City"].apply(cleanCityAndStates)
+
+        newspaperDataRaw["City"] = newspaperDataRaw["City"].apply(lambda x: x.split(", "))
+
+        newspaperDataRaw[["City", "State"]] = pd.DataFrame(newspaperDataRaw["City"].tolist(), index=newspaperDataRaw.index)
         return newspaperDataRaw
     
     def compareCSVData(self):
         newspaperData = self.readNewspaperCSV()
         GNISData = self.readGNISCSV()
-        newspaperData = newspaperData.drop_duplicates(subset = ["City", "Newspaper Title"])
+        #newspaperData = newspaperData.drop_duplicates(subset = ["City", "Newspaper Title"]) # This line eliminates duplicated publication city and newspaper. NOTE that they are NOT duplicated publications, as they were published by the same publisher but in different dates.
         # newspaperData["City"] = newspaperData["City"].apply(lambda x: "City of " + x)
+        
         print(f"readNewspaper: {newspaperData.head()}")
         print(f"length of newspaperData: {len(newspaperData.index)}")
         print(f"GNIS {GNISData.columns}")
@@ -60,7 +83,7 @@ class findLocationData:
         print(f"Merged newspaper data: {mergedNewspaperDataCoordinates.head()}")
         print(f"Merged newspaper data: {mergedNewspaperDataCoordinates.columns}")
         print(f"merged newsppaer data length: {len(mergedNewspaperDataCoordinates.index)}")
-        mergedNewspaperDataCoordinates.to_csv(self.outputCSVLocation, index = False, encoding = "utf-8")
+        # mergedNewspaperDataCoordinates.to_csv(self.outputCSVLocation, index = False, encoding = "utf-8")
 
 if __name__ == "__main__":
     newspaperCSV = "updatedCSVNewspaper.csv"
