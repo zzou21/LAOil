@@ -1,4 +1,4 @@
-'''This code adds which of the 9 US Census Bureau designated regions a state belongs to.'''
+'''This code adds the respective census region that a publication city belongs to.'''
 import pandas as pd
 
 class addRegionToFrame:
