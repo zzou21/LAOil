@@ -1,5 +1,4 @@
 '''This code adds which of the 9 US Census Bureau designated regions a state belongs to.'''
-
 import pandas as pd
 
 class addRegionToFrame:
@@ -30,7 +29,6 @@ class addRegionToFrame:
             
         mainDF["Region"] = mainDF["State"].apply(createRegion)
         mainDF.to_csv(self.inputOutputFilePath, index = False, encoding = "utf-8")
-
 
 if __name__ == "__main__":
     inputOutputFilePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSVNewspaperCoordinates.csv"
