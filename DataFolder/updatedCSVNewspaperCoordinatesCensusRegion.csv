@@ -1,4 +1,4 @@
-Newspaper Title,Issue Date,Page Number,City,State,PDF Link,prim_long_dec,prim_lat_dec,Region
+NewspaperTitle,IssueDate,PageNumber,City,State,PDF Link,prim_long_dec,prim_lat_dec,Region
 The Paducah Sun,03-21-1901,3,Paducah,Kentucky,https://tile.loc.gov/storage-services/service/ndnp/kyu/batch_kyu_liberace_ver01/data/sn85052116/00175044218/1901032102/0306.pdf,-88.6322692,37.0579342,East South Central
 The Paducah Sun,04-23-1901,3,Paducah,Kentucky,https://tile.loc.gov/storage-services/service/ndnp/kyu/batch_kyu_liberace_ver01/data/sn85052116/00175044218/1901042301/0480.pdf,-88.6322692,37.0579342,East South Central
 The Paducah Sun,04-05-1901,3,Paducah,Kentucky,https://tile.loc.gov/storage-services/service/ndnp/kyu/batch_kyu_liberace_ver01/data/sn85052116/00175044218/1901040501/0389.pdf,-88.6322692,37.0579342,East South Central
