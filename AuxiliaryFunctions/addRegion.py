@@ -8,7 +8,7 @@ class addRegionToFrame:
     def addRegion(self):
         mainDF = pd.read_csv(self.inputOutputFilePath)
         def createRegion(data):
-            if data in ["Connecticut", "Main", "Massachusetts", "New Hampshire", "Rhode Island", "Vermont"]:
+            if data in ["Connecticut", "Maine", "Massachusetts", "New Hampshire", "Rhode Island", "Vermont"]:
                 return "New England"
             elif data in ["New Jersey", "New York", "Pennsylvania"]:
                 return "Middle Atlantic"
@@ -18,7 +18,7 @@ class addRegionToFrame:
                 return "West North Central"
             elif data in ["Delaware", "District Of Columbia", "Florida", "Georgia", "Maryland", "North Carolina", "South Carolina", "Virginia", "West Virginia"]:
                 return "South Atlantic"
-            elif data in ["Alamaba", "Kentucky", "Mississippi", "Tennessee"]:
+            elif data in ["Alabama", "Kentucky", "Mississippi", "Tennessee"]:
                 return "East South Central"
             elif data in ["Arkansas", "Louisiana", "Oklahoma", "Texas"]:
                 return "West South Central"
@@ -31,6 +31,6 @@ class addRegionToFrame:
         mainDF.to_csv(self.inputOutputFilePath, index = False, encoding = "utf-8")
 
 if __name__ == "__main__":
-    inputOutputFilePath = "/Users/Jerry/Desktop/DH proj-reading/LAOilNewspaper/LAOil/updatedCSVNewspaperCoordinates.csv"
+    inputOutputFilePath = "/Users/Jerry/Desktop/DHproj-reading/LAOilProject/LAOil/DataFolder/updatedCSVNewspaperCoordinatesCensusRegion copy.csv"
     addRegionTool = addRegionToFrame(inputOutputFilePath)
     addRegionTool.addRegion()
