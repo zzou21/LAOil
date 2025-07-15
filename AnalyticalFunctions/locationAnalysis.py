@@ -1,5 +1,5 @@
 # This file helps to analyze the geospatial spread of the newspapers
-# import pandas as pd
+
 import pandas as pd
 
 class locationAnalysis:
@@ -92,42 +92,70 @@ class locationAnalysis:
         # stateCounterList = sorted(stateCounterList)
         # print(stateCounterList)
 
-        regionCounterList = []
-        for publicationYear, info in locationTimeDictByYear.items():
-            regionSet = set()
-            for region in info:
-                regionSet.add(region[4])
-            regionCounterList.append([publicationYear, len(regionSet)])
-        regionCounterList = sorted(regionCounterList)
-        print(regionCounterList)
+        # regionCounterList = []
+        # for publicationYear, info in locationTimeDictByYear.items():
+        #     regionSet = set()
+        #     for region in info:
+        #         regionSet.add(region[4])
+        #     regionCounterList.append([publicationYear, len(regionSet)])
+        # regionCounterList = sorted(regionCounterList)
+        # print(regionCounterList)
         
         # stateCounterListHalfDecade = []
-        # for publicationRegion, info in locationTimeDictByHalfDecade.items():
+        # for publicationTimeRange, info in locationTimeDictByHalfDecade.items():
         #     stateSet = set()
         #     for paper in info:
         #         stateSet.add(paper[3])
-        #     stateCounterListHalfDecade.append([publicationRegion, len(stateSet)])
+        #     stateCounterListHalfDecade.append([publicationTimeRange, len(stateSet)])
         # stateCounterListHalfDecade = sorted(stateCounterListHalfDecade)
         # print(stateCounterListHalfDecade)
         
         # cityCounterListHalfDecade = []
-        # for publicationRegion, info in locationTimeDictByHalfDecade.items():
+        # for publicationTimeRange, info in locationTimeDictByHalfDecade.items():
         #     citySet = set()
         #     for paper in info:
         #         citySet.add(paper[2])
-        #     cityCounterListHalfDecade.append([publicationRegion, len(citySet)])
+        #     cityCounterListHalfDecade.append([publicationTimeRange, len(citySet)])
         # cityCounterListHalfDecade = sorted(cityCounterListHalfDecade)
         # print(cityCounterListHalfDecade)
 
-        regionCounterListHalfDecacde = []
-        for publicationRegion, info in locationTimeDictByHalfDecade.items():
-            regionSet = set()
-            for paper in info:
-                regionSet.add(paper[4])
-            regionCounterListHalfDecacde.append([publicationRegion, len(regionSet)])
-        regionCounterListHalfDecacde = sorted(regionCounterListHalfDecacde)
-        print(regionCounterListHalfDecacde)
+        # regionCounterListHalfDecacde = []
+        # for publicationTimeRange, info in locationTimeDictByHalfDecade.items():
+        #     regionSet = set()
+        #     for paper in info:
+        #         regionSet.add(paper[4])
+        #     regionCounterListHalfDecacde.append([publicationTimeRange, len(regionSet)])
+        # regionCounterListHalfDecacde = sorted(regionCounterListHalfDecacde)
+        # print(regionCounterListHalfDecacde)
 
+        # Checks how many times one city appears within half a decade
+        # cityNumerationHalfDecade = {}
+        # for publicationTimeRange, info in locationTimeDictByHalfDecade.items():
+        #     cityNumerationHalfDecade[publicationTimeRange] = {}
+        #     for paper in info:
+        #         if paper[2] not in cityNumerationHalfDecade[publicationTimeRange]:
+        #             cityNumerationHalfDecade[publicationTimeRange][paper[2]] = 0
+        #         cityNumerationHalfDecade[publicationTimeRange][paper[2]] += 1
+
+        # cityNumerationHalfDecadeCounter = {}
+        # for publicationTimeRange, cityCounterDict in cityNumerationHalfDecade.items():
+        #     cityNumerationHalfDecadeCounter[publicationTimeRange] = len([city for city, counter in cityCounterDict.items() if counter > 1])
+        # print(sorted(cityNumerationHalfDecadeCounter.items()))
+
+        # Checks how many times one state appears within half a decade
+
+        stateNumerationHalfDecade = {}
+        for publicationTimeRange, info in locationTimeDictByHalfDecade.items():
+            stateNumerationHalfDecade[publicationTimeRange] = {}
+            for paper in info:
+                if paper[3] not in stateNumerationHalfDecade[publicationTimeRange]:
+                    stateNumerationHalfDecade[publicationTimeRange][paper[3]] = 0
+                stateNumerationHalfDecade[publicationTimeRange][paper[3]] += 1
+
+        stateNumerationHalfDecadeCounter = {}
+        for publicationTimeRange, cityCounterDict in stateNumerationHalfDecade.items():
+            stateNumerationHalfDecadeCounter[publicationTimeRange] = len([state for state, counter in cityCounterDict.items() if counter > 5])
+        print(sorted(stateNumerationHalfDecadeCounter.items()))
 
 
     
